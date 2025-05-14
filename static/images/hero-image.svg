@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+    <!-- Art Canvas Background -->
+    <rect x="100" y="50" width="600" height="450" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2"/>
+    
+    <!-- Artistic Elements -->
+    <circle cx="300" cy="200" r="80" fill="#198754" opacity="0.6"/>
+    <rect x="400" y="150" width="160" height="160" fill="#0d6efd" opacity="0.6"/>
+    <polygon points="250,400 350,300 450,400" fill="#dc3545" opacity="0.6"/>
+    
+    <!-- Brush Strokes -->
+    <path d="M200,150 Q300,50 400,150" stroke="#6610f2" stroke-width="8" fill="none" opacity="0.8"/>
+    <path d="M500,350 Q600,250 700,350" stroke="#fd7e14" stroke-width="8" fill="none" opacity="0.8"/>
+    
+    <!-- Artist Tools -->
+    <rect x="150" y="450" width="40" height="100" fill="#6c757d" transform="rotate(-15,150,450)"/>
+    <circle cx="650" cy="100" r="30" fill="#ffc107"/>
+    
+    <!-- Decorative Elements -->
+    <circle cx="200" cy="300" r="10" fill="#20c997"/>
+    <circle cx="600" cy="200" r="15" fill="#d63384"/>
+    <circle cx="400" cy="400" r="12" fill="#0dcaf0"/>
+</svg>

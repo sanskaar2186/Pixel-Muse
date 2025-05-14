@@ -1,0 +1,57 @@
+.toolbar {
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    height: 100vh;
+}
+
+.tool-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tool-btn {
+    width: 100%;
+    text-align: left;
+}
+
+.tool-btn.active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.canvas-area {
+    padding: 20px;
+    background-color: #fff;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.canvas-container {
+    width: 100%;
+    height: calc(100vh - 100px);
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#artboard {
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+}
+
+.canvas-controls {
+    display: flex;
+    gap: 10px;
+}
+
+#colorPicker {
+    height: 40px;
+    padding: 0;
+    border: none;
+}
+
+.brush-size {
+    margin-bottom: 20px;
+}
