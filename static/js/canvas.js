@@ -157,7 +157,15 @@ class ArtBoard {
     }
 
     clearCanvas() {
+        // Clear the canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Clear all layers
+        this.layers = [];
+        this.addLayer();
+        
+        // Clear the saved state in local storage
+        localStorage.removeItem('artboardState');
     }
 
     addLayer() {
@@ -187,10 +195,23 @@ class ArtBoard {
     }
 
     exportAsPNG() {
+        // Create a temporary canvas with white background
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = this.canvas.width;
+        tempCanvas.height = this.canvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+
+        // Fill with white background
+        tempCtx.fillStyle = '#ffffff';
+        tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+        // Draw the original canvas content on top
+        tempCtx.drawImage(this.canvas, 0, 0);
+
         // Create a temporary link element
         const link = document.createElement('a');
         link.download = 'artboard-drawing.png';
-        link.href = this.canvas.toDataURL('image/png');
+        link.href = tempCanvas.toDataURL('image/png');
         
         // Trigger download
         document.body.appendChild(link);
