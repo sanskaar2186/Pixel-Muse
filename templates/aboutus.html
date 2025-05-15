@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | PixelMuse</title>
+    <style>
+        @font-face {
+            font-family: 'Minimog';
+            src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: #0a0a1a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Brush stroke animation */
+        .brush-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .brush-stroke {
+            position: absolute;
+            background: #1e3a8a;
+            border-radius: 50% 40% 40% 40%;
+            filter: blur(10px);
+            opacity: 0;
+            transform-origin: top left;
+            animation: brushStroke 8s forwards;
+        }
+        
+        .stroke1 {
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 500px;
+            animation-delay: 0s;
+            transform: rotate(45deg) translateX(-100%) translateY(-100%);
+        }
+        
+        .stroke2 {
+            top: 10%;
+            left: 20%;
+            width: 300px;
+            height: 300px;
+            animation-delay: 0.5s;
+            transform: rotate(65deg) translateX(-100%) translateY(-100%);
+            background: #0d47a1;
+        }
+        
+        .stroke3 {
+            top: 30%;
+            left: 10%;
+            width: 400px;
+            height: 200px;
+            animation-delay: 1s;
+            transform: rotate(25deg) translateX(-100%) translateY(-100%);
+        }
+        
+        .stroke4 {
+            top: 50%;
+            left: 30%;
+            width: 350px;
+            height: 250px;
+            animation-delay: 1.5s;
+            transform: rotate(55deg) translateX(-100%) translateY(-100%);
+            background: #0d47a1;
+        }
+        
+        .stroke5 {
+            top: 70%;
+            left: 20%;
+            width: 450px;
+            height: 300px;
+            animation-delay: 2s;
+            transform: rotate(35deg) translateX(-100%) translateY(-100%);
+        }
+        
+        .stroke6 {
+            top: 90%;
+            left: 40%;
+            width: 500px;
+            height: 200px;
+            animation-delay: 2.5s;
+            transform: rotate(15deg) translateX(-100%) translateY(-100%);
+            background: #0d47a1;
+        }
+        
+        @keyframes brushStroke {
+            0% {
+                opacity: 0.4;
+                transform: rotate(var(--rotate, 45deg)) translateX(-100%) translateY(-100%);
+            }
+            100% {
+                opacity: 0.15;
+                transform: rotate(var(--rotate, 45deg)) translateX(0) translateY(0);
+            }
+        }
+        
+        /* Paint drip animation */
+        .paint-drip {
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(to bottom, #4dabf7, #1e3a8a);
+            top: 0;
+            opacity: 0;
+            animation: drip 4s ease-in forwards;
+            filter: blur(1px);
+            z-index: 0;
+        }
+        
+        .drip1 { left: 15%; height: 150px; animation-delay: 3s; }
+        .drip2 { left: 25%; height: 200px; animation-delay: 3.5s; }
+        .drip3 { left: 40%; height: 180px; animation-delay: 4s; }
+        .drip4 { left: 60%; height: 220px; animation-delay: 4.5s; }
+        .drip5 { left: 75%; height: 170px; animation-delay: 5s; }
+        .drip6 { left: 85%; height: 190px; animation-delay: 5.5s; }
+        
+        @keyframes drip {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+        
+        .paint-splash {
+            position: absolute;
+            background: radial-gradient(circle at center, #1e3a8a 0%, transparent 70%);
+            filter: blur(60px);
+            z-index: 0;
+            opacity: 0.6;
+        }
+        
+        .splash-1 {
+            top: -10%;
+            left: -10%;
+            width: 80vw;
+            height: 80vh;
+            animation: float 15s ease-in-out infinite;
+        }
+        
+        .splash-2 {
+            bottom: -20%;
+            right: -10%;
+            width: 70vw;
+            height: 70vh;
+            animation: float 20s ease-in-out infinite reverse;
+        }
+        
+        .splash-3 {
+            top: 40%;
+            left: 20%;
+            width: 40vw;
+            height: 40vh;
+            animation: float 25s ease-in-out infinite 5s;
+            background: radial-gradient(circle at center, #0d47a1 0%, transparent 70%);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(5%, 3%) scale(1.05); }
+            50% { transform: translate(-3%, 5%) scale(0.95); }
+            75% { transform: translate(3%, -5%) scale(1.02); }
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            margin-bottom: 2rem;
+            position: relative;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #4dabf7, #1e3a8a, #3b82f6, #0d47a1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+        }
+        
+        .tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.4rem;
+            margin-bottom: 4rem;
+            font-weight: 300;
+            text-align: center;
+            letter-spacing: 12px;
+            color: #a5c8ff;
+            text-transform: lowercase;
+            position: relative;
+            line-height: 1;
+        }
+        
+        .tagline-text {
+            display: inline-block;
+            position: relative;
+            margin: 0 1rem;
+        }
+        
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            text-align: center;
+            max-width: 800px;
+            color: #d0d0e2;
+        }
+        
+        .team-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            width: 100%;
+        }
+        
+        .team-member {
+            position: relative;
+            width: 300px;
+            padding: 2rem;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+        
+        .team-member::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1), transparent 70%);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+        
+        .team-member:hover::before {
+            opacity: 1;
+            animation: sweep 2s linear infinite;
+        }
+        
+        @keyframes sweep {
+            0% { transform: rotate(45deg) translateY(0); }
+            100% { transform: rotate(45deg) translateY(50%); }
+        }
+        
+        .member-image {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #1e3a8a, #0d47a1);
+            border: 3px solid rgba(59, 130, 246, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .member-image span {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #d0d0e2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .member-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: #ffffff;
+        }
+        
+        .member-role {
+            font-size: 1rem;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .brush-stroke {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.2;
+        }
+        
+        .brush-1 {
+            top: 30%;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: #1e3a8a;
+            transform: rotate(-5deg) scaleX(1.5);
+            filter: blur(20px);
+        }
+        
+        .brush-2 {
+            bottom: 20%;
+            right: 0;
+            width: 100%;
+            height: 80px;
+            background: #0d47a1;
+            transform: rotate(3deg) scaleX(1.3);
+            filter: blur(15px);
+        }
+        
+        footer {
+            position: relative;
+            z-index: 1;
+            margin-top: 4rem;
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            background: rgba(10, 10, 26, 0.8);
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+                letter-spacing: 2px;
+            }
+            
+            .about-text {
+                font-size: 1rem;
+            }
+            
+            .team-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .team-member {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        .brush-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='brush' patternUnits='userSpaceOnUse' width='500' height='500' patternTransform='scale(0.6) rotate(0)'%3E%3Cpath d='M250,100 C350,150 350,250 250,300 C150,250 150,150 250,100 Z' fill='none' stroke='%231e3a8a' stroke-width='2' opacity='0.1'/%3E%3Cpath d='M100,250 C150,350 250,350 300,250 C250,150 150,150 100,250 Z' fill='none' stroke='%230d47a1' stroke-width='2' opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23brush)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            z-index: 0;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="brush-bg"></div>
+        <div class="paint-splash splash-1"></div>
+        <div class="paint-splash splash-2"></div>
+        <div class="paint-splash splash-3"></div>
+        
+        <!-- Brush animation -->
+        <div class="brush-animation">
+            <div class="brush-stroke stroke1"></div>
+            <div class="brush-stroke stroke2"></div>
+            <div class="brush-stroke stroke3"></div>
+            <div class="brush-stroke stroke4"></div>
+            <div class="brush-stroke stroke5"></div>
+            <div class="brush-stroke stroke6"></div>
+        </div>
+        
+        <!-- Paint drip animation -->
+        <div class="paint-drip drip1"></div>
+        <div class="paint-drip drip2"></div>
+        <div class="paint-drip drip3"></div>
+        <div class="paint-drip drip4"></div>
+        <div class="paint-drip drip5"></div>
+        <div class="paint-drip drip6"></div>
+        
+        <div class="content">
+            <h1 class="logo">PixelMuse</h1>
+            <h2 class="tagline">
+                <span class="tagline-text">create</span>
+                <span class="tagline-text">curate</span>
+                <span class="tagline-text">connect</span>
+            </h2>
+            
+            <p class="about-text">
+                At PixelMuse, we blend art and technology to create a digital canvas where imagination knows no bounds. 
+                Our studio cultivates a space for artists, designers, and visionaries to express themselves through pixels and code. 
+                Founded on the belief that digital art transcends traditional boundaries, PixelMuse is not just a platform—it's a movement, 
+                a community, and a celebration of creative expression in the digital age.
+            </p>
+            
+            <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #a5c8ff;">Meet Our Team</h2>
+            
+            <div class="team-container">
+                <div class="team-member">
+                    <div class="member-image">
+                        <span>T</span>
+                    </div>
+                    <h3 class="member-name">Tanushree K</h3>
+                    <p class="member-role">Frontend Developer</p>
+                    <p style="text-align: center; color: #d0d0e2;">
+                        The artistic visionary behind our stunning user interfaces, Tanushree crafts experiences that captivate and inspire.
+                    </p>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-image">
+                        <span>A</span>
+                    </div>
+                    <h3 class="member-name">Ayman D</h3>
+                    <p class="member-role">Frontend Developer</p>
+                    <p style="text-align: center; color: #d0d0e2;">
+                        With an eye for detail and a passion for perfection, Ayman transforms concepts into interactive digital masterpieces.
+                    </p>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-image">
+                        <span>S</span>
+                    </div>
+                    <h3 class="member-name">Sanskar U</h3>
+                    <p class="member-role">Backend Developer</p>
+                    <p style="text-align: center; color: #d0d0e2;">
+                        The architectural genius powering our platform, Sanskaar builds robust systems that breathe life into digital art.
+                    </p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 4rem; text-align: center;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #a5c8ff;">Our Mission</h3>
+                <p class="about-text">
+                    We're dedicated to democratizing digital art creation and curation. By providing innovative tools and 
+                    fostering a vibrant community, PixelMuse empowers artists to push boundaries and connect with audiences worldwide.
+                    Join us on this creative journey as we paint the digital canvas of tomorrow.
+                </p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 PixelMuse Studio Art. All rights reserved.</p>
+            <div style="margin-top: 1rem;">
+                <i class="fab fa-instagram" style="margin: 0 10px; font-size: 1.2rem; color: #3b82f6;"></i>
+                <i class="fab fa-twitter" style="margin: 0 10px; font-size: 1.2rem; color: #3b82f6;"></i>
+                <i class="fab fa-behance" style="margin: 0 10px; font-size: 1.2rem; color: #3b82f6;"></i>
+                <i class="fab fa-dribbble" style="margin: 0 10px; font-size: 1.2rem; color: #3b82f6;"></i>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
