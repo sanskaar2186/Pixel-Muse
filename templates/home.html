@@ -1,75 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to ArtBoard Studio</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PixelMuse - Free Online Graphic Design Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2dd4bf;
+      --secondary-color: #0891b2;
+      --accent-color: #f59e0b;
+      --dark-color: #0f766e;
+      --light-color: #ecfeff;
+      --gradient-bg: linear-gradient(135deg, #2dd4bf 0%, #0891b2 50%, #2dd4bf 100%);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--light-color);
+      color: #111;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #121212;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .logo-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+    }
+    
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(120deg, #ecfeff 0%, #ccfbf1 100%);
+      position: relative;
+      overflow: hidden;
+      min-height: 80vh;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(236, 254, 255, 0) 0%, rgba(45, 212, 191, 0.05) 100%);
+      z-index: 0;
+    }
+
+    .text-section {
+      max-width: 45%;
+      position: relative;
+      z-index: 20;
+      background-color: rgba(236, 254, 255, 0.8);
+      padding: 2rem;
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 25px rgba(8, 145, 178, 0.2);
+    }
+
+    .text-section h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to right, var(--dark-color), var(--primary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+    }
+
+    .text-section p {
+      font-size: 1.25rem;
+      margin-bottom: 2.5rem;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .cta-button {
+      padding: 1rem 2rem;
+      background: var(--gradient-bg);
+      color: white;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(79, 70, 229, 0.4);
+    }
+
+    .cta-button.animate {
+      transform: scale(1.05);
+      background-color: var(--secondary-color);
+    }
+
+    .image-section {
+      width: 50%;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      transform: perspective(1000px) rotateY(-10deg);
+      transition: transform 0.3s ease;
+    }
+    
+    .hero-image:hover {
+      transform: perspective(1000px) rotateY(-5deg);
+    }
+    
+    .spline-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+    
+    spline-viewer {
+      width: 100%;
+      height: 100%;
+    }
+
+    .brands {
+      text-align: center;
+      padding: 3rem 0;
+      background-color: #f9f9e9;
+    }
+    
+    .brands-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+    
+    .brand-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4rem;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .brand-logo {
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      max-height: 35px;
+      width: auto;
+    }
+    
+    .brand-logo:hover {
+      opacity: 1;
+    }
+    
+    .features {
+      padding: 5rem 2rem;
+      background: linear-gradient(120deg, #ecfeff 0%, #ccfbf1 100%);
+      text-align: center;
+    }
+    
+    .features h2 {
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: var(--dark-color);
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .feature-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+    }
+    
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--dark-color);
+    }
+    
+    .feature-card p {
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1024px) {
+      .hero {
+        flex-direction: column;
+        padding: 2rem;
+        min-height: 60vh;
+      }
+      
+      .text-section {
+        max-width: 100%;
+        margin-bottom: 3rem;
+      }
+      
+      .spline-container {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        height: 400px;
+        margin-top: 2rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      
+      .text-section h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero-image {
+        transform: none;
+      }
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url_for('home') }}">ArtBoard Studio</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container mt-5">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h1 class="display-4">Create Amazing Art</h1>
-                <p class="lead">Welcome to ArtBoard Studio, your digital canvas for creative expression. Draw, design, and share your artwork with our powerful tools.</p>
-                <div class="mt-4">
-                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-3">Get Started</a>
-                    <a href="{{ url_for('login') }}" class="btn btn-outline-dark btn-lg">Sign In</a>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <img src="{{ url_for('static', filename='images/hero-image.svg') }}" alt="Art Illustration" class="img-fluid">
-            </div>
-        </div>
-
-        <div class="row mt-5 pt-5">
-            <div class="col-md-4">
-                <div class="text-center">
-                    <h3>Digital Canvas</h3>
-                    <p>Create artwork with our intuitive canvas tools and features.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="text-center">
-                    <h3>Save & Share</h3>
-                    <p>Store your projects securely and share them with others.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="text-center">
-                    <h3>Multiple Tools</h3>
-                    <p>Access various drawing tools to bring your ideas to life.</p>
-                </div>
-            </div>
-        </div>
+  <header>
+    <div class="logo">
+      <svg class="logo-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 4L14 2L24 8L18 26L4 4Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/>
+      </svg>
+      PixelMuse
     </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="{{ url_for('login') }}">Log in</a>
+      <a href="{{ url_for('register') }}">Register</a>
+      
+    </nav>
+  </header>
 
-    <footer class="bg-light mt-5 py-4">
-        <div class="container text-center">
-            <p class="mb-0">&copy; 2024 ArtBoard Studio. All rights reserved.</p>
-        </div>
-    </footer>
+  <section class="hero">
+    <div class="text-section">
+      <h1>Create stunning designs in minutes</h1>
+      <p>PixelMuse is a powerful vector-based design workspace that brings professional tools to your browser. Collaborate seamlessly, share resources, and unlock your creative potential with our intuitive interface.</p>
+      <a href="{{ url_for('login') }}"><button class="cta-button" id="animateBtn">Try PixelMuse for Free</button></a>
+    </div>
+    <div class="spline-container">
+      <spline-viewer url="https://prod.spline.design/h7ytXLsTuguvaFH0/scene.splinecode"></spline-viewer>
+    </div>
+  </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <section class="brands">
+    <h2 class="brands-title">Trusted by +650,000</h2>
+    <div class="brand-logos">
+      <img src="/api/placeholder/100/35" alt="Dropbox Logo" class="brand-logo">
+      <img src="/api/placeholder/100/35" alt="Microsoft Logo" class="brand-logo">
+      <img src="/api/placeholder/100/35" alt="Klarna Logo" class="brand-logo">
+      <img src="/api/placeholder/100/35" alt="GoDaddy Logo" class="brand-logo">
+    </div>
+  </section>
+  
+  <section class="features">
+    <h2>Why choose PixelMuse?</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">✨</div>
+        <h3>Professional Templates</h3>
+        <p>Start with our professionally designed templates or create from scratch. The choice is yours.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Real-time Collaboration</h3>
+        <p>Work together with your team in real-time, making edits and seeing changes instantly.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛠️</div>
+        <h3>Advanced Tools</h3>
+        <p>Access professional design tools right in your browser without installing any software.</p>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.94/build/spline-viewer.js"></script>
+  <script>
+    const button = document.getElementById('animateBtn');
+    button.addEventListener('click', () => {
+      button.classList.add('animate');
+      setTimeout(() => button.classList.remove('animate'), 300);
+    });
+  </script>
 </body>
 </html>
